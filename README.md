@@ -68,7 +68,15 @@ near call YOUR_ACCOUNT.testnet deposit --accountId YOUR_ACCOUNT.testnet --deposi
 ```
 
 ### Create a Subaccount
-First, generate a key pair on the client side:
+First, generate a key pair. You have two options:
+
+1. Using NEAR CLI:
+```bash
+near generate-key
+```
+This will create a key pair and save it in your local credentials directory. The public key will be displayed in the terminal.
+
+2. Using JavaScript on the client side:
 ```javascript
 const { KeyPair } = require('near-api-js');
 const keyPair = KeyPair.fromRandom('ed25519');
