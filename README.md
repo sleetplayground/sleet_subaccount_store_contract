@@ -15,6 +15,11 @@ This smart contract enables users to create subaccounts of the master account wh
 class SubAccountFactory {
   deposits: { [key: string]: string } = {};
 
+  @call({})
+  init(): void {
+    // Initialization logic if needed
+  }
+
   @view({})
   get_deposit({ account_id }: { account_id: string }): string {
     return this.deposits[account_id] || '0';
@@ -26,7 +31,7 @@ class SubAccountFactory {
   }
 
   @call({})
-  create_subaccount({ subaccount_id }: { subaccount_id: string }): void {
+  create_subaccount({ subaccount_id, public_key }: { subaccount_id: string, public_key: string }): void {
     // Creates a new subaccount if sufficient deposit exists
   }
 }
@@ -45,6 +50,9 @@ npm run build
 
 # Deploy the contract to your account
 near deploy YOUR_ACCOUNT.testnet build/hello_near.wasm
+
+# Initialize the contract
+near call YOUR_ACCOUNT.testnet init '{}' --accountId YOUR_ACCOUNT.testnet
 ```
 
 ## 2. Interact with the Contract
@@ -56,19 +64,30 @@ near view YOUR_ACCOUNT.testnet get_deposit '{"account_id": "YOUR_ACCOUNT.testnet
 
 ### Make a Deposit
 ```bash
-near call YOUR_ACCOUNT.testnet deposit '' --accountId YOUR_ACCOUNT.testnet --deposit 0.1
+near call YOUR_ACCOUNT.testnet deposit --accountId YOUR_ACCOUNT.testnet --deposit 0.1
 ```
 
 ### Create a Subaccount
+First, generate a key pair on the client side:
+```javascript
+const { KeyPair } = require('near-api-js');
+const keyPair = KeyPair.fromRandom('ed25519');
+const publicKey = keyPair.getPublicKey().toString();
+const privateKey = keyPair.secretKey;
+console.log(`Public Key: ${publicKey}`);
+console.log(`Private Key: ${privateKey}`);
+```
+
+Then, use the public key to create the subaccount:
 ```bash
-near call YOUR_ACCOUNT.testnet create_subaccount '{"subaccount_id": "mysubaccount"}' --accountId YOUR_ACCOUNT.testnet
+near call YOUR_ACCOUNT.testnet create_subaccount '{"subaccount_id": "mysubaccount", "public_key": "YOUR_GENERATED_PUBLIC_KEY"}' --accountId YOUR_ACCOUNT.testnet
 ```
 
 After successful execution, you'll have a new account `mysubaccount.YOUR_ACCOUNT.testnet` with full access keys set up.
 
 ### Deposit and Create Subaccount in One Command
 ```bash
-near call YOUR_ACCOUNT.testnet deposit '' --accountId YOUR_ACCOUNT.testnet --deposit 0.1 && near call YOUR_ACCOUNT.testnet create_subaccount '{"subaccount_id": "mysubaccount"}' --accountId YOUR_ACCOUNT.testnet
+near call YOUR_ACCOUNT.testnet deposit --accountId YOUR_ACCOUNT.testnet --deposit 0.1 && near call YOUR_ACCOUNT.testnet create_subaccount '{"subaccount_id": "mysubaccount", "public_key": "YOUR_GENERATED_PUBLIC_KEY"}' --accountId YOUR_ACCOUNT.testnet
 ```
 
 This command combines the deposit and subaccount creation into a single line using the `&&` operator, which executes the second command only if the first one succeeds.
