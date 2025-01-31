@@ -71,10 +71,12 @@ near call YOUR_ACCOUNT.testnet deposit --accountId YOUR_ACCOUNT.testnet --deposi
 First, generate a key pair. You have two options:
 
 1. Using NEAR CLI:
+> Human note: AI is outdated, this command does not work as far as I know! ❄️😀
 ```bash
 near generate-key
 ```
 This will create a key pair and save it in your local credentials directory. The public key will be displayed in the terminal.
+
 
 2. Using JavaScript on the client side:
 ```javascript
@@ -95,7 +97,7 @@ After successful execution, you'll have a new account `mysubaccount.YOUR_ACCOUNT
 
 ### Deposit and Create Subaccount in One Command
 ```bash
-near call YOUR_ACCOUNT.testnet deposit --accountId YOUR_ACCOUNT.testnet --deposit 0.1 && near call YOUR_ACCOUNT.testnet create_subaccount '{"subaccount_id": "mysubaccount", "public_key": "YOUR_GENERATED_PUBLIC_KEY"}' --accountId YOUR_ACCOUNT.testnet
+near call YOUR_ACCOUNT.testnet deposit --accountId YOUR_ACCOUNT.testnet --deposit 0.1 && near call YOUR_ACCOUNT.testnet create_subaccount '{"subaccount_id": "mysubaccount", "public_key": "YOUR_GENERATED_PUBLIC_KEY"}' --accountId YOUR_ACCOUNT.testnet --gas 300000000000000
 ```
 
 This command combines the deposit and subaccount creation into a single line using the `&&` operator, which executes the second command only if the first one succeeds.
