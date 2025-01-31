@@ -1,83 +1,83 @@
-# Hello NEAR Contract
+# NEAR Subaccount Factory Contract
 
-The smart contract exposes two methods to enable storing and retrieving a greeting in the NEAR network.
+This smart contract enables users to create subaccounts of the master account where the contract is deployed. It requires a deposit of 0.1 NEAR to create subaccounts, which goes to the master account.
+
+## Contract Features
+
+- Users must deposit NEAR before creating subaccounts
+- Required deposit: 0.1 NEAR per subaccount
+- Deposits are tracked per user and cannot be withdrawn
+- Multiple subaccounts can be created if sufficient deposit exists
+- Full access keys are automatically set up for new subaccounts
 
 ```ts
 @NearBindgen({})
-class HelloNear {
-  greeting: string = "Hello";
+class SubAccountFactory {
+  deposits: { [key: string]: string } = {};
 
-  @view // This method is read-only and can be called for free
-  get_greeting(): string {
-    return this.greeting;
+  @view({})
+  get_deposit({ account_id }: { account_id: string }): string {
+    return this.deposits[account_id] || '0';
   }
 
-  @call // This method changes the state, for which it cost gas
-  set_greeting({ greeting }: { greeting: string }): void {
-    // Record a log permanently to the blockchain!
-    near.log(`Saving greeting ${greeting}`);
-    this.greeting = greeting;
+  @call({ payable: true })
+  deposit(): void {
+    // Users can deposit NEAR to enable subaccount creation
+  }
+
+  @call({})
+  create_subaccount({ subaccount_id }: { subaccount_id: string }): void {
+    // Creates a new subaccount if sufficient deposit exists
   }
 }
 ```
 
-<br />
-
 # Quickstart
 
-1. Make sure you have installed [node.js](https://nodejs.org/en/download/package-manager/) >= 16.
+1. Make sure you have installed [node.js](https://nodejs.org/en/download/package-manager/) >= 16
 2. Install the [`NEAR CLI`](https://github.com/near/near-cli#setup)
 
-<br />
-
-## 1. Build and Test the Contract
-You can automatically compile and test the contract by running:
+## 1. Build and Deploy the Contract
 
 ```bash
+# Build the contract
 npm run build
+
+# Deploy the contract to your account
+near deploy YOUR_ACCOUNT.testnet build/hello_near.wasm
 ```
 
-<br />
+## 2. Interact with the Contract
 
-## 2. Create an Account and Deploy the Contract
-You can create a new account and deploy the contract by running:
-
+### Check Your Deposit Balance
 ```bash
-near create-account <your-account.testnet> --useFaucet
-near deploy <your-account.testnet> build/release/hello_near.wasm
+near view YOUR_ACCOUNT.testnet get_deposit '{"account_id": "YOUR_ACCOUNT.testnet"}'
 ```
 
-<br />
-
-
-## 3. Retrieve the Greeting
-
-`get_greeting` is a read-only method (aka `view` method).
-
-`View` methods can be called for **free** by anyone, even people **without a NEAR account**!
-
+### Make a Deposit
 ```bash
-# Use near-cli to get the greeting
-near view <your-account.testnet> get_greeting
+near call YOUR_ACCOUNT.testnet deposit '' --accountId YOUR_ACCOUNT.testnet --deposit 0.1
 ```
 
-<br />
-
-## 4. Store a New Greeting
-`set_greeting` changes the contract's state, for which it is a `call` method.
-
-`Call` methods can only be invoked using a NEAR account, since the account needs to pay GAS for the transaction.
-
+### Create a Subaccount
 ```bash
-# Use near-cli to set a new greeting
-near call <your-account.testnet> set_greeting '{"greeting":"howdy"}' --accountId <your-account.testnet>
+near call YOUR_ACCOUNT.testnet create_subaccount '{"subaccount_id": "mysubaccount"}' --accountId YOUR_ACCOUNT.testnet
 ```
 
-**Tip:** If you would like to call `set_greeting` using another account, first login into NEAR using:
+After successful execution, you'll have a new account `mysubaccount.YOUR_ACCOUNT.testnet` with full access keys set up.
 
+### Deposit and Create Subaccount in One Command
 ```bash
-# Use near-cli to login your NEAR account
-near login
+near call YOUR_ACCOUNT.testnet deposit '' --accountId YOUR_ACCOUNT.testnet --deposit 0.1 && near call YOUR_ACCOUNT.testnet create_subaccount '{"subaccount_id": "mysubaccount"}' --accountId YOUR_ACCOUNT.testnet
 ```
 
-and then use the logged account to sign the transaction: `--accountId <another-account>`.
+This command combines the deposit and subaccount creation into a single line using the `&&` operator, which executes the second command only if the first one succeeds.
+
+## Important Notes
+
+- The deposit of 0.1 NEAR is required for each subaccount creation
+- Deposits cannot be withdrawn
+- You can create multiple subaccounts as long as you have sufficient deposit
+- The contract automatically sets up full access keys for new subaccounts
+- Each subaccount receives a small amount of NEAR for storage fees
+

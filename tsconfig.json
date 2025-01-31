@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": false,
+    "allowJs": true,
+    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "target": "ES5",
-    "noEmit": true,
+    "skipLibCheck": true,
     "noImplicitAny": false,
+    "lib": ["es2020", "dom"]
   },
-  "files": [
-    "src/contract.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }
