@@ -1,6 +1,5 @@
 // Find all our documentation at https://docs.near.org
-import { NearBindgen, near, call, view } from 'near-sdk-js';
-import { utils } from 'near-api-js';
+import { NearBindgen, near, call, view, PublicKey } from 'near-sdk-js';
 
 const DEPOSIT_AMOUNT = '100000000000000000000000'; // 0.1 NEAR in yoctoNEAR
 
@@ -41,7 +40,7 @@ export class SubAccountFactory {
     const newAccountId = `${subaccount_id}.${contractId}`;
 
     // Convert the public key to the correct format
-    const publicKeyObj = utils.PublicKey.fromString(public_key);
+    const publicKeyObj = PublicKey.fromString(public_key);
     const publicKeyArray = publicKeyObj.data;
 
     // Create the new account
