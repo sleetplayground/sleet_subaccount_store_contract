@@ -49,7 +49,7 @@ class SubAccountFactory {
 npm run build
 
 # Deploy the contract to your account
-near deploy YOUR_ACCOUNT.testnet build/hello_near.wasm
+near deploy YOUR_ACCOUNT.testnet build/build/sleet_subaccount.wasm
 
 # Initialize the contract
 near call YOUR_ACCOUNT.testnet init '{}' --accountId YOUR_ACCOUNT.testnet

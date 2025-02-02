@@ -4,7 +4,7 @@
   "license": "(MIT AND Apache-2.0)",
   "type": "module",
   "scripts": {
-    "build": "near-sdk-js build src/contract.ts build/hello_near.wasm",
+    "build": "near-sdk-js build src/contract.ts build/sleet_subaccount.wasm",
     "test": "$npm_execpath run build && ava -- ./build/hello_near.wasm"
   },
   "dependencies": {
