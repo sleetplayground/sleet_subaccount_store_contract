@@ -110,3 +110,23 @@ This command combines the deposit and subaccount creation into a single line usi
 - The contract automatically sets up full access keys for new subaccounts
 - Each subaccount receives a small amount of NEAR for storage fees
 
+## Storage Costs
+
+For some reason, User must have over four near in their
+account to deploy the contract.
+(5 to be safe, you can recover this NEAR by either:
+- Deploying a minimal contract to replace the existing one
+- Deleting the contract completely with 'near delete')
+
+
+The contract stores the following data:
+- A mapping of account IDs to their deposit amounts
+- Each user entry costs approximately 0.00082 NEAR in storage
+- The contract has a base storage cost of 0.00367 NEAR
+
+Storage fees are automatically managed by the contract, and a small portion of the 0.1 NEAR deposit covers these costs.
+
+For 100 users:
+- Base storage: 0.00367 NEAR
+- Deposits mapping (100 entries): 100 * 0.00082 = 0.082 NEAR
+Total: ~0.08567 NEAR
