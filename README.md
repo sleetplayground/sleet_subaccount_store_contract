@@ -7,6 +7,8 @@ Turn your near account into a subaccount store
 
 This smart contract enables users to create subaccounts of the master account where the contract is deployed. It requires a deposit of 0.1 NEAR to create subaccounts, which goes to the master account.
 
+![image](DOCS/sleet_banner_100px_8e9dcc.svg)
+
 ## Contract Features
 
 - Users must deposit NEAR before creating subaccounts
@@ -139,8 +141,8 @@ For 100 users:
 Total: ~0.08567 NEAR
 
 
-
-----
+---
+![image](DOCS/sleet_banner_100px_8e9dcc.svg)
 
 
 This repo and contract are a part of the sleet playground project by Nathan Renfroe and The SunShining.

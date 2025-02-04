@@ -10,3 +10,4 @@ build/hello_near.js
 build/hello_near.js.map
 # hello_near.wasm
 build/methods.h
+.DS_Store
