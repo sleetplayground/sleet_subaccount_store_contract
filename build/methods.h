@@ -1,0 +1,5 @@
+DEFINE_NEAR_METHOD(SubAccountFactory)
+DEFINE_NEAR_METHOD(create_subaccount)
+DEFINE_NEAR_METHOD(deposit)
+DEFINE_NEAR_METHOD(get_deposit)
+DEFINE_NEAR_METHOD(init)
