@@ -7,3 +7,5 @@ near call cheaptryaggauuycrtxrtyghb.testnet deposit --accountId veeeheuhhuuhu.te
 ```
 
 
+> I only did one test run form the cli it looks like!
+> See this contract in action on the .web3stick.near store https://web3stick.on-fleek.app/
