@@ -54,12 +54,20 @@ class SubAccountFactory {
 
 1. Make sure you have installed [node.js](https://nodejs.org/en/download/package-manager/) >= 16
 2. Install the [`NEAR CLI`](https://github.com/near/near-cli#setup)
+3. Install [PNPM](https://pnpm.io/installation) (recommended)
 
 ## 1. Build and Deploy the Contract
 
 ```bash
+# Install dependencies
+pnpm install
+
 # Build the contract
-npm run build
+pnpm run build
+
+# to see errors, this command is helpful to run so you can get something to send to ai when experiencing build errors, when this thing outputs no errors, you sohould be able to build
+npx tsc --noEmit --skipLibCheck --experimentalDecorators --target es2020 --moduleResolution node src/contract.ts
+
 
 # Deploy the contract to your account
 near deploy YOUR_ACCOUNT.testnet build/build/sleet_subaccount.wasm
