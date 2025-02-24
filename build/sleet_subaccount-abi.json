@@ -1,0 +1,97 @@
+{
+  "schema_version": "0.3.0",
+  "metadata": {
+    "name": "sleet_subaccount",
+    "version": "1.0.0",
+    "authors": [],
+    "build": {
+      "compiler": "tsc 4.7.4",
+      "builder": "near-sdk-js 2.0.0"
+    }
+  },
+  "body": {
+    "functions": [
+      {
+        "name": "init",
+        "kind": "call",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "undefined"
+          }
+        }
+      },
+      {
+        "name": "get_deposit",
+        "kind": "view",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "account_id",
+              "type_schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "string"
+          }
+        }
+      },
+      {
+        "name": "deposit",
+        "kind": "call",
+        "modifiers": [
+          "payable"
+        ],
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "undefined"
+          }
+        }
+      },
+      {
+        "name": "create_subaccount",
+        "kind": "call",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "subaccount_id",
+              "type_schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "public_key",
+              "type_schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "undefined"
+          }
+        }
+      }
+    ],
+    "root_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "string"
+        }
+      },
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+}
