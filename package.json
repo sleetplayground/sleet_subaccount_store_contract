@@ -4,7 +4,7 @@
   "license": "(MIT AND Apache-2.0)",
   "type": "module",
   "scripts": {
-    "build": "near-sdk-js build src/contract.ts build/sleet_subaccount.wasm",
+    "build": "near-sdk-js build --generateABI src/contract.ts build/sleet_subaccount.wasm",
     "test": "$npm_execpath run build && ava -- ./build/hello_near.wasm"
   },
   "dependencies": {
@@ -12,6 +12,7 @@
     "near-sdk-js": "2.0.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.25.9",
     "ava": "^6.1.3",
     "near-workspaces": "^4.0.0",
     "typescript": "^5.4.5"
@@ -21,5 +22,15 @@
       "sandbox-test/*.ava.js"
     ]
   },
-  "packageManager": "pnpm@10.4.1"
+  "packageManager": "pnpm@10.4.1",
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "secp256k1"
+    ],
+    "onlyBuiltDependencies": [
+      "near-sandbox",
+      "near-sdk-js",
+      "near-workspaces"
+    ]
+  }
 }
